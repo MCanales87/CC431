@@ -176,8 +176,13 @@ GLuint Utils::loadTexture(const char *texImagePath) {
 		// ----- mipmap/anisotropic section
 		glBindTexture(GL_TEXTURE_2D, textureRef);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-		//~ cv::cvtColor(image, image, cv::COLOR_RGB2BGR);
-
+		//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+		// Set texture clamping method
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_MIRRORED_REPEAT);
+		float color[] = { 1.0f, 0.0f, 0.0f, 1.0f };
+		glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, color);
+		//
 		glTexImage2D(GL_TEXTURE_2D,         // Type of texture
 					0,                   // Pyramid level (for mip-mapping) - 0 is the top level
 					GL_RGB,              // Internal colour format to convert to
@@ -191,12 +196,9 @@ GLuint Utils::loadTexture(const char *texImagePath) {
 		glGenerateMipmap(GL_TEXTURE_2D);
 		
 		if (glewIsSupported("GL_EXT_texture_filter_anisotropic")) {
-			cout<<"ENTRE EXT"<<endl;
-			GLfloat anisoset = 0.0f;
-			glGetFloatv(GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT, &anisoset);
-			glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, anisoset);
-		} else {
-			cout<<"ENTRE EXT NOOO"<<endl;
+			//~ GLfloat anisoset = 0.0f;
+			//~ glGetFloatv(GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT, &anisoset);
+			//~ glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, anisoset);
 		}
 	// ----- end of mipmap/anisotropic section
 	}

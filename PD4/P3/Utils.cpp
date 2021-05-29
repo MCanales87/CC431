@@ -190,9 +190,12 @@ GLuint Utils::loadTexture(const char *texImagePath) {
 		glGenerateMipmap(GL_TEXTURE_2D);
 		
 		if (glewIsSupported("GL_EXT_texture_filter_anisotropic")) {
-			//~ GLfloat anisoset = 0.0f;
-			//~ glGetFloatv(GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT, &anisoset);
-			//~ glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, anisoset);
+			cout<<"ENTRE EXT"<<endl;
+			GLfloat anisoset = 0.0f;
+			glGetFloatv(GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT, &anisoset);
+			glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, anisoset);
+		} else{
+			cout<<"ENTRE EXT NOOO"<<endl;
 		}
 	// ----- end of mipmap/anisotropic section
 	}

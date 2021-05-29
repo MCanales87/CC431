@@ -29,7 +29,7 @@ int width, height;
 float aspect;
 glm::mat4 pMat, vMat, mMat, mvMat;
 
-Sphere mySphere = Sphere(48);
+Sphere mySphere = Sphere(12);
 
 void setupVertices(void) {
 	std::vector<int> ind = mySphere.getIndices();
@@ -82,7 +82,7 @@ void init(GLFWwindow* window) {
 
 void display(GLFWwindow* window, double currentTime) {
 	glClear(GL_DEPTH_BUFFER_BIT);
-	glClearColor(1.0, 1.0, 0.0, 1.0);
+	glClearColor(0.0, 0.0, 0.0, 1.0);
 	glClear(GL_COLOR_BUFFER_BIT);
 
 	glUseProgram(renderingProgram);
@@ -102,16 +102,16 @@ void display(GLFWwindow* window, double currentTime) {
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
 	glEnableVertexAttribArray(0);
 
-	glBindBuffer(GL_ARRAY_BUFFER, vbo[1]);
+	/*glBindBuffer(GL_ARRAY_BUFFER, vbo[1]);
 	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, 0);
 	glEnableVertexAttribArray(1);
 
 	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, earthTexture);
+	glBindTexture(GL_TEXTURE_2D, earthTexture);*/
 
 	glEnable(GL_CULL_FACE);
 	glFrontFace(GL_CCW);
-
+	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	glDrawArrays(GL_TRIANGLES, 0, mySphere.getNumIndices());
 }
 

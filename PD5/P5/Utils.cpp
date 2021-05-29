@@ -169,34 +169,30 @@ GLuint Utils::loadCubeMap(const char *mapDir) {
 GLuint Utils::loadTexture(const char *texImagePath) {	
 	GLuint textureRef;
 	cv::Mat image = cv::imread(texImagePath);
-	if( image.empty() ) {
+	if( image.empty() ){
 	      std::cout << "image empty" << std::endl;
 	} else {
 		glGenTextures(1, &textureRef); //#:1 textura
 		// ----- mipmap/anisotropic section
 		glBindTexture(GL_TEXTURE_2D, textureRef);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-		//~ cv::cvtColor(image, image, cv::COLOR_RGB2BGR);
 
-		glTexImage2D(GL_TEXTURE_2D,         // Type of texture
-					0,                   // Pyramid level (for mip-mapping) - 0 is the top level
-					GL_RGB,              // Internal colour format to convert to
-					image.cols,          // Image width  i.e. 640 for Kinect in standard mode
-					image.rows,          // Image height i.e. 480 for Kinect in standard mode
-					0,                   // Border width in pixels (can either be 1 or 0)
-					GL_BGR,              // Input image format (i.e. GL_RGB, GL_RGBA, 	GL_BGR etc.)
-					GL_UNSIGNED_BYTE,    // Image data type
-					image.ptr());        // The actual image data itself
+		  glTexImage2D(GL_TEXTURE_2D,         // Type of texture
+							0,                   // Pyramid level (for mip-mapping) - 0 is the top level
+							GL_RGB,              // Internal colour format to convert to
+							image.cols,          // Image width  i.e. 640 for Kinect in standard mode
+							image.rows,          // Image height i.e. 480 for Kinect in standard mode
+							0,                   // Border width in pixels (can either be 1 or 0)
+							GL_BGR,              // Input image format (i.e. GL_RGB, GL_RGBA, GL_BGR etc.)
+							GL_UNSIGNED_BYTE,    // Image data type
+							image.ptr());        // The actual image data itself
 							
 		glGenerateMipmap(GL_TEXTURE_2D);
 		
 		if (glewIsSupported("GL_EXT_texture_filter_anisotropic")) {
-			cout<<"ENTRE EXT"<<endl;
 			GLfloat anisoset = 0.0f;
 			glGetFloatv(GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT, &anisoset);
 			glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, anisoset);
-		} else {
-			cout<<"ENTRE EXT NOOO"<<endl;
 		}
 	// ----- end of mipmap/anisotropic section
 	}
